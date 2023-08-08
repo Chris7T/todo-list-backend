@@ -1,0 +1,46 @@
+version: '3'
+services:
+    app:
+        build:
+            context: ./.docker/app
+            dockerfile: Dockerfile
+        container_name: app
+        image: app
+        volumes:
+            - '.:/var/www'
+        networks:
+            - todolist
+        depends_on:
+            - mysql
+    nginx:
+        build:
+            context: ./.docker/nginx
+            dockerfile: Dockerfile
+        container_name: nginx
+        image: nginx
+        volumes:
+            - '.:/var/www'
+        restart: always
+        tty: true
+        networks:
+            - todolist
+        ports:
+            - "80:80"
+        depends_on:
+            - app
+    mysql:
+        image: mysql:latest
+        container_name: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: 'mysql'
+            MYSQL_DATABASE: 'todolist'
+            MYSQL_USER: 'mysql'
+            MYSQL_PASSWORD: 'mysql'
+        networks:
+            - todolist
+        ports:
+            - "3306:3306"
+networks:
+    todolist:
+        driver: bridge
