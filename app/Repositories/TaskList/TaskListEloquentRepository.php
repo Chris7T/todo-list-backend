@@ -14,7 +14,19 @@ class TaskListEloquentRepository implements TaskListInterfaceRepository
 
     public function getAll(int $userId): Paginator
     {
-        return $this->model->where('user_id', $userId)->simplePaginate(7);
+        $paginator = $this->model->withCount([
+            'tasks', 
+            'tasks AS completed_tasks_count' => function ($query) {
+                $query->where('completed', true);
+            }
+        ])->where('user_id', $userId)->simplePaginate(7);
+    
+        $paginator->getCollection()->transform(function ($item) {
+            $item->completed_ratio = "{$item->completed_tasks_count}/{$item->tasks_count}";
+            return $item;
+        });
+        
+        return $paginator;
     }
 
     public function create(string $name, int $userId): TaskList
