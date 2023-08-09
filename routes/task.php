@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Task\TaskCreateController;
 use App\Http\Controllers\Task\TaskDeleteController;
+use App\Http\Controllers\Task\TaskExportFromGoogleController;
 use App\Http\Controllers\Task\TaskGetController;
+use App\Http\Controllers\Task\TaskImportFromGoogleController;
 use App\Http\Controllers\Task\TaskListController;
 use App\Http\Controllers\Task\TaskSetCompleteController;
 use App\Http\Controllers\Task\TaskUpdateController;
@@ -26,4 +28,7 @@ Route::middleware('auth:api')->prefix('task')->name('task.')->group(function () 
     Route::get('get/{id}', TaskGetController::class)->name('get');
     Route::patch('complete/{id}', TaskSetCompleteController::class)->name('complete');
     Route::put('update/{id}', TaskUpdateController::class)->name('update');
+    Route::get('google/import', TaskImportFromGoogleController::class)->name('google.import');
+    Route::get('google/export', TaskExportFromGoogleController::class)->name('google.export');
 });
+
