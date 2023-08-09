@@ -72,7 +72,7 @@ php artisan l5-swagger:generate
 
 # Documentation link
 
-Para acessar a documentação basta acessar o link 
+To access the Swagger documentation just access the link
 
 ```
    /api/documentation/
