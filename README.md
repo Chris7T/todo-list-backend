@@ -30,7 +30,7 @@ git clone https://github.com/Chris7T/todo-list-backend.git
 ```
 2. - Enter the project folder
 ```
-cd liberfly-test
+cd todo-list-backend
 ```
 3. - Up the containers
 ```
